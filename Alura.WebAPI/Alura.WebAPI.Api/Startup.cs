@@ -8,6 +8,7 @@ using Alura.ListaLeitura.Persistencia;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -48,11 +49,20 @@ namespace Alura.WebAPI.Api
                     ValidateLifetime = true, //Valida se o token ainda está valido;
                     ValidateIssuerSigningKey = true, //Valida o token enviado na requisição;
                     IssuerSigningKey = new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes("minha-senha-super-forte")), //Cria o segredo;
-                    ClockSkew = TimeSpan.FromMinutes(5),
+                    ClockSkew = TimeSpan.FromMinutes(30),
                     ValidIssuer = "Alura.WebApp",
                     ValidAudience = "Postman",
                 };
             });
+
+
+            //Possibilita o envio da versão tanto por parâmetro na url quanto pelo header da requisição;
+            //services.AddApiVersioning(options => {
+            //    options.ApiVersionReader = ApiVersionReader.Combine(
+            //        new QueryStringApiVersionReader("api-version"),
+            //        new HeaderApiVersionReader("api-version")
+            //        );
+            //});
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)

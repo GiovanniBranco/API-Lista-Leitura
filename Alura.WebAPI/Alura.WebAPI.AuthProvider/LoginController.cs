@@ -41,7 +41,7 @@ namespace Alura.ListaLeitura.Services
 
 
                     //signature (chave + credenciais);
-                    var chave = new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes("alura-webapi-authentication-valid"));
+                    var chave = new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes("minha-senha-super-forte"));
                     var credenciais = new SigningCredentials(chave, SecurityAlgorithms.HmacSha256);
 
                     var token = new JwtSecurityToken(

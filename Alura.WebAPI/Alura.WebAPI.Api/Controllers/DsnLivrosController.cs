@@ -4,21 +4,18 @@ using System.Linq;
 using System.Threading.Tasks;
 using Alura.ListaLeitura.Modelos;
 using Alura.ListaLeitura.Persistencia;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Formatters;
 
-namespace Alura.ListaLeitura.Api.Controllers
+namespace Alura.WebAPI.Api.Controllers
 {
     [ApiController]
-    [ApiVersion("1.0")]
-    [Route("api/v{version:apiVersion}/[controller]")] // Versionando com o parametro na url;
-    [Authorize]
-    public class LivrosController : ControllerBase
+    [ApiVersion("2.0")]
+    [Route("api/v{version:apiVersion}/livros")] //Versionando versão no desenvolvimento;
+    public class DsnLivrosController : ControllerBase
     {
         private readonly IRepository<Livro> _repo;
 
-        public LivrosController(IRepository<Livro> repository)
+        public DsnLivrosController( IRepository<Livro> repository )
         {
             _repo = repository;
         }
@@ -31,7 +28,7 @@ namespace Alura.ListaLeitura.Api.Controllers
         }
 
         [HttpGet("{id}")]
-        public IActionResult Recuperar(int id)
+        public IActionResult Recuperar( int id )
         {
             var model = _repo.Find(id);
             if (model == null)
@@ -42,7 +39,7 @@ namespace Alura.ListaLeitura.Api.Controllers
         }
 
         [HttpGet("{id}/capa")]
-        public IActionResult ImagemCapa(int id)
+        public IActionResult ImagemCapa( int id )
         {
             byte[] img = _repo.All
                 .Where(l => l.Id == id)
@@ -56,7 +53,7 @@ namespace Alura.ListaLeitura.Api.Controllers
         }
 
         [HttpPost]
-        public IActionResult Incluir([FromForm] LivroUpload model)
+        public IActionResult Incluir( [FromForm] LivroUpload model )
         {
             if (ModelState.IsValid)
             {
@@ -69,7 +66,7 @@ namespace Alura.ListaLeitura.Api.Controllers
         }
 
         [HttpPut]
-        public IActionResult Alterar([FromForm] LivroUpload model)
+        public IActionResult Alterar( [FromForm] LivroUpload model )
         {
             if (ModelState.IsValid)
             {
@@ -88,7 +85,7 @@ namespace Alura.ListaLeitura.Api.Controllers
         }
 
         [HttpDelete("{id}")]
-        public IActionResult Remover(int id)
+        public IActionResult Remover( int id )
         {
             var model = _repo.Find(id);
             if (model == null)
